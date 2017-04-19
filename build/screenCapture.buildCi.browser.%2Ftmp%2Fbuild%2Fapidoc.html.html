@@ -1,0 +1,247 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/caseycesari/geojson.js">geojson (v0.4.1)</a>
+</h1>
+<h4>Turn your geo data into GeoJSON</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.geojson">module geojson</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.geojson.parse">
+            function <span class="apidocSignatureSpan">geojson.</span>parse
+            <span class="apidocSignatureSpan">(objects, params, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan"></span>geojson</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">geojson.</span>defaults</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">string <span class="apidocSignatureSpan">geojson.</span>version</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.geojson.geojson">module geojson.geojson</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.geojson.geojson.parse">
+            function <span class="apidocSignatureSpan">geojson.geojson.</span>parse
+            <span class="apidocSignatureSpan">(objects, params, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">geojson.geojson.</span>defaults</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">string <span class="apidocSignatureSpan">geojson.geojson.</span>version</span>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.geojson" id="apidoc.module.geojson">module geojson</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.geojson.parse" id="apidoc.element.geojson.parse">
+        function <span class="apidocSignatureSpan">geojson.</span>parse
+        <span class="apidocSignatureSpan">(objects, params, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">parse = function (objects, params, callback) {
+
+  var geojson,
+      settings = applyDefaults(params, this.defaults),
+      propFunc;
+
+  geomAttrs.length = 0; // Reset the list of geometry fields
+  setGeom(settings);
+  propFunc = getPropFunction(settings);
+
+  if (Array.isArray(objects)) {
+    geojson = {"type": "FeatureCollection", "features": []};
+    objects.forEach(function(item){
+      geojson.features.push(getFeature(item, settings, propFunc));
+    });
+    addOptionals(geojson, settings);
+  } else {
+    geojson = getFeature(objects, settings, propFunc);
+  }
+
+  if (callback &amp;&amp; typeof callback === 'function') {
+    callback(geojson);
+  } else {
+    return geojson;
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+{ name: 'Location C', category: 'Office', street: 'South', lat: 39.123, lng: -74.534 }
+];
+```
+
+Convert it to GeoJSON:
+
+```javascript
+GeoJSON.<span class="apidocCodeKeywordSpan">parse</span>(data, {Point: ['lat', 'lng']});
+
+{
+"type": "FeatureCollection",
+"features": [
+  { "type": "Feature",
+    "geometry": {"type": "Point", "coordinates": [-75.343, 39.984]},
+    "properties": {
+...</pre></li>
+    </ul>
+
+
+
+
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.geojson.geojson" id="apidoc.module.geojson.geojson">module geojson.geojson</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.geojson.geojson.parse" id="apidoc.element.geojson.geojson.parse">
+        function <span class="apidocSignatureSpan">geojson.geojson.</span>parse
+        <span class="apidocSignatureSpan">(objects, params, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">parse = function (objects, params, callback) {
+
+  var geojson,
+      settings = applyDefaults(params, this.defaults),
+      propFunc;
+
+  geomAttrs.length = 0; // Reset the list of geometry fields
+  setGeom(settings);
+  propFunc = getPropFunction(settings);
+
+  if (Array.isArray(objects)) {
+    geojson = {"type": "FeatureCollection", "features": []};
+    objects.forEach(function(item){
+      geojson.features.push(getFeature(item, settings, propFunc));
+    });
+    addOptionals(geojson, settings);
+  } else {
+    geojson = getFeature(objects, settings, propFunc);
+  }
+
+  if (callback &amp;&amp; typeof callback === 'function') {
+    callback(geojson);
+  } else {
+    return geojson;
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+{ name: 'Location C', category: 'Office', street: 'South', lat: 39.123, lng: -74.534 }
+];
+```
+
+Convert it to GeoJSON:
+
+```javascript
+GeoJSON.<span class="apidocCodeKeywordSpan">parse</span>(data, {Point: ['lat', 'lng']});
+
+{
+"type": "FeatureCollection",
+"features": [
+  { "type": "Feature",
+    "geometry": {"type": "Point", "coordinates": [-75.343, 39.984]},
+    "properties": {
+...</pre></li>
+    </ul>
+
+
+
+
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
